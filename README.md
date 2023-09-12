@@ -54,4 +54,4 @@ make test
 ```
 ## Postman Collection
 
-Please download this postman collection to test this service [Postman Collection]([https://golang.org/doc/install](https://drive.google.com/file/d/14KK69xCLd6_7y-4ierh8VKNjFtUJ0zyp/view?usp=sharing)https://drive.google.com/file/d/14KK69xCLd6_7y-4ierh8VKNjFtUJ0zyp/view?usp=sharing)
+Please download this postman collection to test this service [Postman Collection](https://golang.org/doc/install](https://drive.google.com/file/d/14KK69xCLd6_7y-4ierh8VKNjFtUJ0zyp/view?usp=sharing)https://drive.google.com/file/d/14KK69xCLd6_7y-4ierh8VKNjFtUJ0zyp/view?usp=sharing)
