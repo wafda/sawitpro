@@ -1,0 +1,184 @@
+# This is the OpenAPI specification for your service. It is used to generate the client code.
+# To generate the server code, use the Gradle task `openApiGenerate`. The 
+# generated code will be placed in `build/generate-resources/main`.
+#
+# We will evaluate you based on how well you design your API.
+# 1. How well it follows REST principles.
+# 2. How easy it is to understand and use.
+#
+# References
+# 1. https://swagger.io/specification/
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: User Service
+  license:
+    name: MIT
+servers:
+  - url: http://localhost
+paths:
+  /profile:
+    get:
+      summary: Returns user's profile
+      description: Return data of a user
+      operationId: getProfile
+      parameters:
+        - name: token
+          in: query
+          description: token of logged in user
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Profile response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Update User's profile
+      description: Return data of a user
+      operationId: putProfile
+      requestBody:
+        description: Register User request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      parameters:
+        - name: token
+          in: query
+          description: token of logged in user
+          required: false
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Profile response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /register:
+    post:
+      summary: Register new User
+      description: Register new user to our system
+      operationId: registerUser
+      requestBody:
+        description: Register User request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: user response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /login:
+    post:
+      summary: Login the user
+      description: Login the user
+      operationId: loginUser
+      requestBody:
+        description: Login User request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: user response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    User:
+      allOf:
+        - $ref: '#/components/schemas/RegisterRequest'
+        - required:
+            - id
+          properties:
+            id:
+              type: integer
+              format: int64
+              description: Unique id of the pet
+            token:
+              type: string
+              description: token of the user
+    RegisterRequest:
+      required:
+        - fullName
+        - phoneNumbers
+      properties:
+        phoneNumbers:
+          type: string
+          description: phoneNumber of the user
+        fullName:
+          type: string
+          description: fullName of the user
+        password:
+          type: string
+          description: password of the user
+        passwordConfirmation:
+          type: string
+          description: password confirmation of the user
+    LoginRequest:
+        required:
+          - phoneNumbers
+          - password
+        properties:
+          phoneNumbers:
+            type: string
+            description: phoneNumber of the user
+          password:
+            type: string
+            description: password of the user
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error message
